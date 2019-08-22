@@ -1,0 +1,37 @@
+Arguments: 
+  /usr/bin/node /usr/share/yarn/bin/yarn.js add express
+
+PATH: 
+  /home/talita/bin:/home/talita/.local/bin:/home/talita/bin:/home/talita/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+
+Yarn version: 
+  1.17.3
+
+Node version: 
+  10.16.3
+
+Platform: 
+  linux x64
+
+Trace: 
+  SyntaxError: /home/talita/workspace/bootcamp/modulo01/package.json: Unexpected token / in JSON at position 0
+      at JSON.parse (<anonymous>)
+      at /usr/share/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/share/yarn/lib/cli.js:304:30)
+      at /usr/share/yarn/lib/cli.js:315:13
+
+npm manifest: 
+  //não usa se a apalicação não for uma bibliotecas
+  {
+    "name": "modulo01",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

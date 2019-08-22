@@ -1,0 +1,16 @@
+{
+  "name": "Desafio01bootcamp",
+  "version": "1",
+  "description": "Rotas com express no node",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
+  "scripts":{
+    "dev":"nodemon index.js"
+  }
+}
