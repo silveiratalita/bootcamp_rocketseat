@@ -2,6 +2,7 @@
 import express from "express";
 // importa as rotas e passa la em routes
 import routes from "./routes";
+import "./database";
 
 class App {
   constructor() {
