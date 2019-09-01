@@ -10,6 +10,7 @@ environment:
 POSTGRES_PASSWORD: docker
 POSTGRES_USER: postgres
 POSTGRES_DB: gobarber
+POSTGRES_PUBLISH: 127.0.0.1:5434:5432
 
 adminer:
 image: adminer
