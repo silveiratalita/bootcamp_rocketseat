@@ -1,5 +1,5 @@
 import { Router } from 'express';
 
-const routes = new Router();
+router: Router;
 
 export default routes;

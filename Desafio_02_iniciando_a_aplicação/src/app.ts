@@ -1,13 +1,13 @@
-import express from 'express';
-import cors from 'cors';
+import * as express from 'express';
+import * as cors from 'cors';
 
 import routes from './routes';
 
 class App {
-  public express: express.Application;
+  public server: express.Application;
 
   public constructor() {
-    this.express = express();
+    this.server = express();
 
     this.middlewares();
 
@@ -15,13 +15,13 @@ class App {
   }
 
   private middlewares(): void {
-    this.express.use(express.json());
-    this.express.use(cors());
+    this.server.use(express.json());
+    this.server.use(cors());
   }
 
   private routes(): void {
-    this.express.use(routes);
+    this.server.use(routes);
   }
 }
 
-export default new App().express;
+export default new App().server;
