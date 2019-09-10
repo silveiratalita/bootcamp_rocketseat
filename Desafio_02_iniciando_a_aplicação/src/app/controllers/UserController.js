@@ -1,23 +1,25 @@
 import * as Yup from 'yup';
-import Controller from './Controller';
 import { Request, Response, Router } from 'express';
 import User from '../models/User/User';
 import HttpException from '../../errors/HttpException';
-import * as bcrypt from 'bcryptjs';
-class UserController extends Controller {
-  public async checkPassword(
-    password: string,
-    password_hash: string
-  ): Promise<boolean> {
-    try {
-      const verifyPassword = await bcrypt.compare(password, password_hash);
-      return verifyPassword;
-    } catch (error) {
-      return error;
-    }
+import bcrypt from 'bcryptjs';
+class UserController {
+  // async checkPassword(password, password_hash) {
+  //   try {
+  //     const verifyPassword = await bcrypt.compare(password, password_hash);
+  //     return verifyPassword;
+  //   } catch (error) {
+  //     return error;
+  //   }
+  // }
+
+  async hashPassword(password) {
+    const password_hash = bcrypt.hash(password, 10);
+    return password_hash;
   }
-  public async createUser(req: Request, res: Response): Promise<Response> {
+  async createUser(req, res) {
     const { name, email, cellphone, password } = req.body;
+    const user = new User(req.body);
 
     const schema = Yup.object().shape({
       name: Yup.string().required(),
@@ -25,19 +27,38 @@ class UserController extends Controller {
       password: Yup.string().required(),
       cellphone: Yup.string(),
     });
-    if (!(await schema.isValid(req.body))) {
-      return res.send(new HttpException(404, 'Usuario não encontrado!'));
-    }
-    const userExists = await User.findOne({ where: email });
-    if (!userExists) {
-      return res.send(new HttpException(404, 'Usuario não encontrado!'));
-    }
-    const userSaved = await User.create(req.body);
 
-    return res.json({ userSaved });
+    if (!(await schema.isValid(req.body))) {
+      return res.send(
+        new HttpException(404, 'Falha na validação das informações')
+      );
+    }
+
+    try {
+      const userExists = await User.findOne({ where: { email: email } });
+    } catch (error) {
+      console.log('UserExists: ' + error);
+    }
+
+    if (userExists) {
+      return res.send(
+        new HttpException(
+          400,
+          'Usuario já existe! Favor informar um email ianda não cadastrado!'
+        )
+      );
+    }
+    let userSaved;
+    try {
+      userSaved = await User.create(user);
+    } catch (error) {
+      console.log('userSaved: ' + error);
+    }
+
+    return res.json(userSaved);
   }
 
-  public async update(req: Request, res: Response): Promise<Response> {
+  async update(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string(),
       email: Yup.string().email(),
@@ -45,13 +66,11 @@ class UserController extends Controller {
       password: Yup.string()
         .min(6)
         .min(6)
-        .when('oldPassword', (oldPassword: string, field: any) =>
+        .when('oldPassword', (oldPassword, field) =>
           oldPassword ? field.required() : field
         ),
-      confirmPassword: Yup.string().when(
-        'password',
-        (password: string, field: any) =>
-          password ? field.required().oneOf([Yup.ref('password')]) : field
+      confirmPassword: Yup.string().when('password', (password, field) =>
+        password ? field.required().oneOf([Yup.ref('password')]) : field
       ),
     });
 
@@ -74,7 +93,7 @@ class UserController extends Controller {
         return res.status(400).json({ error: 'A senha não bate' });
       }
     }
-    const userUpdated: User = await req.body.user.update(req.body);
+    const userUpdated = await req.body.user.update(req.body);
     return res.json(userUpdated);
   }
 }

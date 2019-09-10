@@ -1,27 +1,20 @@
-import * as express from 'express';
-import * as cors from 'cors';
-
+import express from 'express';
 import routes from './routes';
+import './database';
 
 class App {
-  public server: express.Application;
-
-  public constructor() {
+  constructor() {
     this.server = express();
-
     this.middlewares();
-
     this.routes();
   }
 
-  private middlewares(): void {
+  middlewares() {
     this.server.use(express.json());
-    this.server.use(cors());
   }
 
-  private routes(): void {
+  routes() {
     this.server.use(routes);
   }
 }
-
 export default new App().server;
