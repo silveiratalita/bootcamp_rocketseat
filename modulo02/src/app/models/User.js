@@ -18,12 +18,12 @@ class User extends Model {
     this.addHook("beforeSave", async user => {
       try {
         if (user.password) {
-          console.log(`user: ${user}`);
           user.password_hash = await bcrypt.hash(user.password, 10);
         }
       } catch (error) {
-        console.log(`erro: ${error}`);
+        return error;
       }
+      return 0;
     });
 
     return this;
