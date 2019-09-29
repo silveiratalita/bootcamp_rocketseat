@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Component } from 'react';
 //import PropTypes from 'prop-types';
-import { Loading, Owner } from './styles';
+import { Loading, Owner, IssueList } from './styles';
 import api from '../../services/api';
-import { Container } from '../../Components/Container';
+import  Container  from '../../Components/Container';
 export default class Repository extends Component{
 //   static propTypes = {
 //     match: proptypes.shape({
@@ -43,7 +43,7 @@ export default class Repository extends Component{
 }
 
   render() {
-    const { repository, loading } = this.state;
+    const { repository, loading, issues } = this.state;
 //issue
     if (loading) {
       return <Loading>Carregando</Loading>
@@ -57,6 +57,22 @@ export default class Repository extends Component{
             <p>{repository.description}</p>
           </Owner>
 
+          <IssueList>
+            {issues.map(issue => (
+              <li key={String(issues.id)}>
+                <img src={issue.user.avatar_url} alt={issue.user.login} />
+                <div>
+                  <strong>
+                    <a href={issue.html_url}>{issue.title}</a>
+                    {issue.labels.map(label => (
+                      <span key={String(label.id)}>{label.name}</span>
+                    ))}
+                  </strong>
+                  <p>{issue.user.login}</p>
+                </div>
+              </li>
+            ))}
+          </IssueList>
 
    </Container>
   );
