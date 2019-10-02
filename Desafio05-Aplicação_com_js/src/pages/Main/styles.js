@@ -32,7 +32,7 @@ export const Form = styled.form`
          font-family: fantasy;
          input {
            flex: 1;
-           border: 1px solid ${props => (props.error ? '#900' : '#fff')};
+           border: 8px solid ${props => (props.error ? '#900' : '#000')};
            padding: 10px 15px;
            border-radius: 4px;
            font-size: 16px;
@@ -93,11 +93,13 @@ export const List = styled.ul`
            & + li {
              border-top: solid #eee;
            }
+
            a {
              color: #7159c1;
              text-decoration: none;
              font-family: fantasy;
            }
+
          }
        `;
 
