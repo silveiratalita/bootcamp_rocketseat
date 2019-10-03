@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Component } from 'react';
 //import PropTypes from 'prop-types';
-import { Loading, Owner, IssueList } from './styles';
+import { Loading, Owner, IssueList, Button } from './styles';
 import api from '../../services/api';
 import Container from '../../Components/Container';
 
@@ -18,19 +18,26 @@ export default class Repository extends Component {
                  state = {
                    repository: {},
                    issues: [],
+                   page: 1,
                    loading: true,
+                   selected: "",
+                 };
+  async componentDidMount() {
+    const { match } = this.props;
+    const repoName = decodeURIComponent(match.params.repository);
+    const selected = decodeURIComponent(match.params.selected);
+    const page = match.params.page;
 
-                 }
-                 async componentDidMount() {
-                   const { match } = this.props;
-                   const repoName = decodeURIComponent(match.params.repository);
+
+
+    console.log('CHEGOU AQUI >>>', match);
 
                    const [repository, issues] = await Promise.all([
                      api.get(`/repos/${repoName}`),
-                     api.get(`/repos/${repoName}/issues`, {
+                     api.get(`/repos/${repoName}/issues?state=${selected}`, {
                        params: {
-                         state: 'open',
-                         per_page: 5
+                         state: selected,
+                          per_page: 2
                        }
                      })
                    ]);
@@ -38,17 +45,21 @@ export default class Repository extends Component {
                    this.setState({
                      repository: repository.data,
                      issues: issues.data,
-                     loading: false
+                     loading: false,
+                     page: page + 1
+
                    });
                  }
 
                  render() {
-                   const { repository, loading, issues } = this.state;
+                   const { repository, loading, issues,page } = this.state;
 
                    //issue
                    if (loading) {
+                     console.log('chamando apis');
                      return <Loading>Carregando</Loading>;
                    }
+
                    return (
                      <Container>
                        <Owner>
@@ -82,6 +93,13 @@ export default class Repository extends Component {
                            </li>
                          ))}
                        </IssueList>
+                       <Button page={page}>
+                         <button onClick={page}>Anterior</button>
+                       </Button>
+
+                       <Button page={page}>
+                         <button onclick={page}>Próxima</button>
+                       </Button>
                      </Container>
                    );
                  }

@@ -117,7 +117,7 @@ export default class Main extends Component {
           {repositories.map(repository => (
             <li key={repository.name}>
               <span>{repository.name}</span>
-              <Link to={`/repository/${encodeURIComponent(repository.name)}/issues?state=${this.state.selected}`}>  Ver Issues  </Link>
+              <Link to={`/repository/${encodeURIComponent(repository.name)}/issues/${encodeURIComponent(selected)}`}>  Ver issues  </Link>
               <Dropdown
                 placeholder="Selecione uma opção"
                 options={options}

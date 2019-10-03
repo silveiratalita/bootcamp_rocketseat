@@ -94,4 +94,17 @@ li{
     }
   }
 }
-`;
+`  ;
+export const Button = styled.button.attrs(props => ({
+         disable: props.page
+       }))`
+         padding: 25px;
+         border-radius: 5px;
+         font-size: 16px;
+         cursor: pointer;
+         margin-left:150px;
+
+          &:hover {
+           opacity: 0.7;
+         }
+       `;
