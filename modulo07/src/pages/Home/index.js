@@ -5,16 +5,15 @@ import { ProductList } from './styles';
 import api from "../../services/api";
 import {formatPrice} from '../../util/format'
 import { runInThisContext } from 'vm';
+import cart from '../../strore/modules/cart/reducer';
+import * as CartActions from '../../strore/modules/cart/actions'
  class Home extends Component {
    state = {
      products: []
    };
    handleAddProduct = product => {
      const { dispatch } = this.props;
-     dispatch({
-       type: 'ADD_TO_CART',
-       product,
-     });
+     dispatch(CartActions.addToCart(product));
    };
    async componentDidMount() {
      const response = await api.get('products');
@@ -31,14 +30,14 @@ import { runInThisContext } from 'vm';
          {products.map(product => (
            <li key={product.id}>
              <img src={product.image} alt={product.title} />
-             <strong>product.title</strong>
+             <strong>{product.title}</strong>
              <span>{product.priceFormatted}</span>
              <button
                type="button"
                onClick={() => this.handleAddProduct(product)}
              >
                <div>
-                 <MdAddShoppingCart size={16} color="#FFF" />3
+                 <MdAddShoppingCart size={16} color="#FFF" />
                </div>
                <span>Adicionar ao Carrinho</span>
              </button>
