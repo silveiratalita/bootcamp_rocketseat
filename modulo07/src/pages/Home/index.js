@@ -4,16 +4,15 @@ import { MdAddShoppingCart } from 'react-icons/md';
 import { ProductList } from './styles';
 import api from "../../services/api";
 import {formatPrice} from '../../util/format'
-import { runInThisContext } from 'vm';
-import cart from '../../strore/modules/cart/reducer';
-import * as CartActions from '../../strore/modules/cart/actions'
+import { bindActionCreators } from 'redux';
+import * as CartActions from '../../store/modules/cart/actions'
  class Home extends Component {
    state = {
      products: []
    };
    handleAddProduct = product => {
-     const { dispatch } = this.props;
-     dispatch(CartActions.addToCart(product));
+     const { addToCart } = this.props;
+     addToCart(product);
    };
    async componentDidMount() {
      const response = await api.get('products');
@@ -47,5 +46,6 @@ import * as CartActions from '../../strore/modules/cart/actions'
      );
    }
  }
-
-export default connect()(Home);
+ const mapDispatchToProps = dispatch =>
+  bindActionCreators(CartActions, dispatch);
+export default connect(null, mapDispatchToProps)(Home);

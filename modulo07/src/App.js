@@ -7,7 +7,7 @@ import Header from './components/Header';
 import ProductList from './pages/Home/index';
 import { Provider } from 'react-redux';
 
-import store from './strore'
+import store from './store'
 function App() {
   return (
     <Provider store={store}>
