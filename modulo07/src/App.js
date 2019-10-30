@@ -14,7 +14,6 @@ function App() {
       <BrowserRouter>
         <GlobalStyle />
         <Header />
-        <ProductList />
         <Routes />
       </BrowserRouter>
     </Provider>

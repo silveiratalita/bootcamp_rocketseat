@@ -48,4 +48,13 @@ import * as CartActions from '../../store/modules/cart/actions'
  }
  const mapDispatchToProps = dispatch =>
   bindActionCreators(CartActions, dispatch);
+
+  // const mapDispatchToProps2 = dispatch => ({
+  //   addToCart: (product) => dispatch(CartActions.addToCart(product)),
+  // })
+
+  // const mapDispatchToProps3 = {
+  //   addToCart: CartActions.addToCart,
+  // }
+
 export default connect(null, mapDispatchToProps)(Home);
