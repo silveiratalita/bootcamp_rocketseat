@@ -10,9 +10,9 @@ import * as CartActions from '../../store/modules/cart/actions'
    state = {
      products: []
    };
-   handleAddProduct = product => {
-     const { addToCart } = this.props;
-     addToCart(product);
+   handleAddProduct = id => {
+     const { addToCartRequest } = this.props;
+     addToCartRequest(id);
    };
    async componentDidMount() {
      const response = await api.get('products');
@@ -34,7 +34,7 @@ import * as CartActions from '../../store/modules/cart/actions'
              <span>{product.priceFormatted}</span>
              <button
                type="button"
-               onClick={() => this.handleAddProduct(product)}
+               onClick={() => this.handleAddProduct(product.id)}
              >
                <div>
                  <MdAddShoppingCart size={16} color="#FFF" />{''}
