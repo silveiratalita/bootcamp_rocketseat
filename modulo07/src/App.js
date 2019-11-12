@@ -6,13 +6,14 @@ import GlobalStyle from './styles/global';
 import Header from './components/Header';
 import ProductList from './pages/Home/index';
 import { Provider } from 'react-redux';
-
+import { ToastContainer } from 'react-toastify';
 import store from './store'
 function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
         <GlobalStyle />
+        <ToastContainer autoClose={3000} />
         <Header />
         <Routes />
       </BrowserRouter>
