@@ -6,12 +6,12 @@ import * as CartAction from '../../store/modules/cart/actions';
 import { bindActionCreators } from 'redux';
 import { formatPrice } from '../../util/format';
 
-function Cart({ cart, removeFromCart, total, updateAmount }) {
+function Cart({ cart, removeFromCart, total, updateAmountRequest }) {
   function increment(product) {
-    CartAction.updateAmountRequest(product.id, product.amount + 1);
+  updateAmountRequest(product.id, product.amount + 1);
   }
   function decrement(product) {
-    updateAmount(product.id, product.amount - 1);
+    updateAmountRequest(product.id, product.amount - 1);
   }
   return (
     <Container>
